@@ -1,3 +1,5 @@
 SOURCE_DATA = "E:\Kinga\Studies-mgr\Semestr 3\Praca dyplomowa\PolandData\k_d_t"
+SOURCE_DATA2 = "E:\Kinga\Studies-mgr\Semestr 3\Praca dyplomowa\PolandData\k_d"
 DATA_WITH_HEADERS = "E:\Kinga\Studies-mgr\Semestr 3\Praca dyplomowa\PolandData\k_h"
+DATA_WITH_HEADERS2 = "E:\Kinga\Studies-mgr\Semestr 3\Praca dyplomowa\PolandData\k_d_h"
 DESTINATION_FOLDER = "E:\Kinga\Studies-mgr\Semestr 3\Praca dyplomowa\PolandData"

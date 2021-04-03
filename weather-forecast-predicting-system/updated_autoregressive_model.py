@@ -22,7 +22,7 @@ history = [history[i] for i in range(len(history))]
 predictions = list()
 for t in range(len(test)):
     length = len(history)
-    lag = [history[i] for i in range(length-window,length)]
+    lag = [history[i] for i in range(length-window, length)]
     yhat = coef[0]
     for d in range(window):
         yhat += coef[d+1] * lag[window-d-1]

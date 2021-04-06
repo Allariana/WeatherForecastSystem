@@ -25,7 +25,7 @@ temps = DataFrame(series.values)
 # correlation of lag=1
 values = DataFrame(series.values)
 dataframe = concat([values.shift(1), values], axis=1)
-dataframe.columns = ['t', 't+1']
+dataframe.columns = ['t-1', 't']
 result = dataframe.corr()
 print(result)
 

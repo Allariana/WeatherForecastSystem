@@ -1,4 +1,4 @@
-# Test RMSE: 2.343
+# Test RMSE: 2.323
 from math import sqrt
 from numpy import concatenate
 from matplotlib import pyplot
@@ -50,8 +50,8 @@ reframed = series_to_supervised(scaled, 1, 1)
 reframed.drop(reframed.columns[[3]], axis=1, inplace=True)
 # split into train and test sets
 values = reframed.values
-train = values[:2000, :]
-test = values[2000:, :]
+train = values[:3500, :]
+test = values[3500:, :]
 # split into input and outputs
 train_X, train_y = train[:, :-1], train[:, -1]
 test_X, test_y = test[:, :-1], test[:, -1]
@@ -67,10 +67,10 @@ model.compile(loss='mae', optimizer='adam')
 # fit network
 history = model.fit(train_X, train_y, epochs=50, batch_size=72, validation_data=(test_X, test_y), verbose=2, shuffle=False)
 # plot history
-pyplot.plot(history.history['loss'], label='train')
-pyplot.plot(history.history['val_loss'], label='test')
-pyplot.legend()
-pyplot.show()
+# pyplot.plot(history.history['loss'], label='train')
+# pyplot.plot(history.history['val_loss'], label='test')
+# pyplot.legend()
+# pyplot.show()
 # make a prediction
 yhat = model.predict(test_X)
 test_X = test_X.reshape((test_X.shape[0], test_X.shape[2]))
@@ -83,6 +83,12 @@ test_y = test_y.reshape((len(test_y), 1))
 inv_y = concatenate((test_y, test_X[:, 1:]), axis=1)
 inv_y = scaler.inverse_transform(inv_y)
 inv_y = inv_y[:, 0]
+# plot forecasts against actual outcomes
+pyplot.plot(inv_y)
+pyplot.plot(inv_yhat, color='red')
+pyplot.show()
+for t in range(100):
+    print('predicted=%f, expected=%f' % (inv_yhat[t], inv_y[t]))
 # calculate RMSE
 rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
 print('Test RMSE: %.3f' % rmse)

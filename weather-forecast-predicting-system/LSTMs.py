@@ -1,11 +1,15 @@
+from math import sqrt
+
 from keras.optimizer_v1 import SGD
 from pandas import read_csv
 from pandas import DataFrame
 from pandas import concat
 from pandas import Series
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import mean_squared_error
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
+from sklearn.model_selection import train_test_split
 from constants import *
 
 # define contrived series
@@ -27,27 +31,29 @@ dataframe = concat([values.shift(1), values], axis=1)
 dataframe.columns = ['t-1', 't']
 X = dataframe['t-1']
 y = dataframe['t']
-X = X.to_numpy()
-X = X.reshape(1, 4022, 1)
-y = y.to_numpy()
-y = y.reshape(1, 4022, 1)
+# split data for train and test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1)
+X_train = X_train.to_numpy()
+X_train = X_train.reshape(1, X_train.size, 1)
+X_test = X_test.to_numpy()
+X_test = X_test.reshape(1, X_test.size, 1)
+y_train = y_train.to_numpy()
+y_train = y_train.reshape(1, y_train.size, 1)
+y_test = y_test.to_numpy()
+y_test = y_test.reshape(1, y_test.size, 1)
+#
 # define the model
 model = Sequential()
-model.add(LSTM(5, input_shape=(4022, 1)))
+model.add(LSTM(5, input_shape=(X_train.size, 1)))
 model.add(Dense(1))
 algorithm = SGD(lr=0.1, momentum=0.3)
 model.compile(optimizer='sgd', loss='mean_squared_error', metrics=['accuracy'])
-# split data for train and test
-# training_dataset_length = math.ceil(len(data) * .75)
-# train_data = data[0:training_dataset_length, :]
-# x_train = []
-# y_train = []
-
-# for i in range(10, len(train_data)):
-#     x_train.append(train_data[i-10:i, 0])
-#     y_train.append(train_data[i, 0])
-
-model.fit(X, y, batch_size=3500, epochs=100)
-# Evaluate the Model
-loss, accuracy = model.evaluate(X, y)  # accuracy 0.0002
+#
+#
+# # model.fit(X, y, batch_size=3500, epochs=100)
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+rmse = sqrt(mean_squared_error(y_test, predictions))
+# # Evaluate the Model
+# loss, accuracy = model.evaluate(X, y)  # accuracy 0.0002
 print()

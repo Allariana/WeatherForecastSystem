@@ -3,8 +3,8 @@ from constants import *
 
 df = pd.read_csv("weather.csv", encoding='windows-1250', squeeze=True)
 df_sort = df.sort_values(by=['Kod stacji', 'Rok', 'Miesiac', 'Dzien'])
-df_warsaw = df_sort.loc[df_sort['Nazwa stacji'] == 'WARSZAWA-FILTRY']
-df_warsaw_temp = df_warsaw.iloc[:, [7, 9]]
-df_warsaw_temp.to_csv(DESTINATION_FOLDER + "\warsaw-filtry.csv", encoding='windows-1250')
+df_city = df_sort.loc[df_sort['Nazwa stacji'] == CITY]
+df_city_chosen = df_city.iloc[:, [5, 6, 7, 8, 9, 10, 12, 13]]
+df_city_chosen.to_csv(DESTINATION_FOLDER + FILENAME, encoding='windows-1250')
 
 print("Koniec")

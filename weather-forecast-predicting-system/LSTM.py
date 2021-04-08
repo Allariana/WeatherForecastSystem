@@ -1,4 +1,3 @@
-# Test RMSE: 2.323
 from math import sqrt
 from numpy import concatenate
 from matplotlib import pyplot
@@ -37,7 +36,7 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
     return agg
 
 
-dataset = read_csv(DESTINATION_FOLDER + "\warsaw-filtry.csv", header=0, index_col=0)
+dataset = read_csv(DESTINATION_FOLDER + FILENAME, header=0, index_col=0)
 values = dataset.values
 # ensure all data is float
 values = values.astype('float32')
@@ -47,11 +46,12 @@ scaled = scaler.fit_transform(values)
 # frame as supervised learning
 reframed = series_to_supervised(scaled, 1, 1)
 # drop columns we don't want to predict
-reframed.drop(reframed.columns[[3]], axis=1, inplace=True)
+reframed.drop(reframed.columns[[8, 9, 11, 12, 13, 14, 15]], axis=1, inplace=True)
+# reframed.drop(reframed.columns[[3]], axis=1, inplace=True)
 # split into train and test sets
 values = reframed.values
-train = values[:3500, :]
-test = values[3500:, :]
+train = values[:TRAIN_SIZE, :]
+test = values[TRAIN_SIZE:, :]
 # split into input and outputs
 train_X, train_y = train[:, :-1], train[:, -1]
 test_X, test_y = test[:, :-1], test[:, -1]

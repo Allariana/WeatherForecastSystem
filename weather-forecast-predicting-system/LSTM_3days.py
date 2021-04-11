@@ -82,7 +82,7 @@ inv_y = inv_y[:, 0]
 pyplot.plot(inv_y)
 pyplot.plot(inv_yhat, color='red')
 pyplot.show()
-for t in range(100):
+for t in range(400):
     print('predicted=%f, expected=%f' % (inv_yhat[t], inv_y[t]))
 # calculate RMSE
 rmse = sqrt(mean_squared_error(inv_y, inv_yhat))

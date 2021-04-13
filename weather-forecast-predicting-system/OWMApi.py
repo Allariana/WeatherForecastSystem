@@ -7,7 +7,7 @@ headers = {
     'x-rapidapi-host': "community-open-weather-map.p.rapidapi.com"
     }
 
-conn.request("GET", "/onecall/timemachine?lat=52.29958465640118&lon=20.927704121901673&dt=1618217921", headers=headers)
+conn.request("GET", "/onecall/timemachine?lat=52.29958465640118&lon=20.927704121901673&dt=1617843600", headers=headers)
 
 res = conn.getresponse()
 data = res.read()

@@ -78,9 +78,22 @@ inv_y = concatenate((test_y, test_X[:, -4:]), axis=1)
 inv_y = scaler.inverse_transform(inv_y)
 inv_y = inv_y[:, 0]
 # plot forecasts against actual outcomes
-pyplot.plot(inv_y)
-pyplot.plot(inv_yhat, color='red')
+pyplot.plot(inv_y, label='wartość oczekiwana')
+pyplot.plot(inv_yhat, color='red', label='wartość prognozowana')
+pyplot.xlabel('Numer próbki')
+pyplot.ylabel('Średnia temperatura dobowa °C')
+pyplot.title('Wykres wartości prognozowanej średniej temperatury dobowej')
 pyplot.show()
+
+# inv_y_cut = inv_y[400:, 0]
+# inv_yhat_cut = inv_yhat[400:, 0]
+# pyplot.plot(inv_y_cut, label='wartość oczekiwana')
+# pyplot.plot(inv_yhat_cut, color='red', label='wartość prognozowana')
+# pyplot.xlabel('Numer probki')
+# pyplot.ylabel('Srednia temperatura dobowa °C')
+# pyplot.title('Wykres wartosci prognozowanej sredniej temperatury dobowej')
+# pyplot.legend('wartość oczekiwana', 'wartość prognozowana')
+# pyplot.show()
 for t in range(400):
     print('predicted=%f, expected=%f' % (inv_yhat[t], inv_y[t]))
 # calculate RMSE

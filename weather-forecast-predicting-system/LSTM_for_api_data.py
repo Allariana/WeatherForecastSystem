@@ -6,6 +6,7 @@ from pandas import DataFrame
 from pandas import concat
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
 from constants import *
@@ -50,11 +51,14 @@ reframed.drop(reframed.columns[[25, 26, 28, 29]], axis=1, inplace=True)
 # reframed.drop(reframed.columns[[3]], axis=1, inplace=True)
 # split into train and test sets
 values = reframed.values
-train = values[:TRAIN_SIZE, :]
-test = values[TRAIN_SIZE:, :]
-# split into input and outputs
-train_X, train_y = train[:, :N_OBS], train[:, -N_FEATURES]
-test_X, test_y = test[:, :N_OBS], test[:, -N_FEATURES]
+X = values[:, :N_OBS]
+y = values[:, -N_FEATURES]
+train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=0.1, random_state=42)
+# train = values[:TRAIN_SIZE, :]
+# test = values[TRAIN_SIZE:, :]
+# # split into input and outputs
+# train_X, train_y = train[:, :N_OBS], train[:, -N_FEATURES]
+# test_X, test_y = test[:, :N_OBS], test[:, -N_FEATURES]
 # reshape input to be 3D [samples, timesteps, features]
 train_X = train_X.reshape((train_X.shape[0], N_DAYS, N_FEATURES))
 test_X = test_X.reshape((test_X.shape[0], N_DAYS, N_FEATURES))
@@ -86,8 +90,10 @@ pyplot.ylabel('Średnia temperatura dobowa °C')
 pyplot.title('Wykres wartości prognozowanej średniej temperatury dobowej')
 pyplot.show()
 
-inv_y_cut = inv_y[440:]
-inv_yhat_cut = inv_yhat[440:]
+# inv_y_cut = inv_y[440:]
+# inv_yhat_cut = inv_yhat[440:]
+inv_y_cut = inv_y[350:]
+inv_yhat_cut = inv_yhat[350:]
 pyplot.plot(inv_y_cut, label='wartość oczekiwana')
 pyplot.plot(inv_yhat_cut, color='red', label='wartość prognozowana')
 pyplot.legend()

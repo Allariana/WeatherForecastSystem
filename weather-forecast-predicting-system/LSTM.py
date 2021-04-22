@@ -6,6 +6,7 @@ from pandas import DataFrame
 from pandas import concat
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
 from constants import *
@@ -46,15 +47,18 @@ scaled = scaler.fit_transform(values)
 # frame as supervised learning
 reframed = series_to_supervised(scaled, 1, 1)
 # drop columns we don't want to predict
-reframed.drop(reframed.columns[[8, 9, 11, 12, 13, 14, 15]], axis=1, inplace=True)
+reframed.drop(reframed.columns[[9, 10, 12, 13, 14, 15, 16, 17]], axis=1, inplace=True)
 # reframed.drop(reframed.columns[[3]], axis=1, inplace=True)
 # split into train and test sets
 values = reframed.values
-train = values[:TRAIN_SIZE, :]
-test = values[TRAIN_SIZE:, :]
-# split into input and outputs
-train_X, train_y = train[:, :-1], train[:, -1]
-test_X, test_y = test[:, :-1], test[:, -1]
+X = values[:, :9]
+y = values[:, -1]
+train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=0.1, random_state=42)
+# train = values[:TRAIN_SIZE, :]
+# test = values[TRAIN_SIZE:, :]
+# # split into input and outputs
+# train_X, train_y = train[:, :-1], train[:, -1]
+# test_X, test_y = test[:, :-1], test[:, -1]
 # reshape input to be 3D [samples, timesteps, features]
 train_X = train_X.reshape((train_X.shape[0], 1, train_X.shape[1]))
 test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
@@ -66,11 +70,6 @@ model.add(Dense(1))
 model.compile(loss='mae', optimizer='adam')
 # fit network
 history = model.fit(train_X, train_y, epochs=50, batch_size=72, validation_data=(test_X, test_y), verbose=2, shuffle=False)
-# plot history
-# pyplot.plot(history.history['loss'], label='train')
-# pyplot.plot(history.history['val_loss'], label='test')
-# pyplot.legend()
-# pyplot.show()
 # make a prediction
 yhat = model.predict(test_X)
 test_X = test_X.reshape((test_X.shape[0], test_X.shape[2]))
@@ -84,8 +83,12 @@ inv_y = concatenate((test_y, test_X[:, 1:]), axis=1)
 inv_y = scaler.inverse_transform(inv_y)
 inv_y = inv_y[:, 0]
 # plot forecasts against actual outcomes
-pyplot.plot(inv_y)
-pyplot.plot(inv_yhat, color='red')
+pyplot.plot(inv_y, label='wartość oczekiwana')
+pyplot.plot(inv_yhat, color='red', label='wartość prognozowana')
+pyplot.legend()
+pyplot.xlabel('Numer próbki')
+pyplot.ylabel('Średnia temperatura dobowa °C')
+pyplot.title('Wykres wartości prognozowanej średniej temperatury dobowej')
 pyplot.show()
 for t in range(100):
     print('predicted=%f, expected=%f' % (inv_yhat[t], inv_y[t]))

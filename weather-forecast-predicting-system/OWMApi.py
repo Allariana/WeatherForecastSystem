@@ -1,8 +1,6 @@
 import http.client
-import time
+import ast
 from datetime import datetime, timedelta, timezone
-import pandas as pd
-import json
 
 day_before = datetime.now() - timedelta(1)
 timestamp = int(day_before.replace(tzinfo=timezone.utc).timestamp())
@@ -18,5 +16,6 @@ conn.request("GET", "/onecall/timemachine?lat=52.29958465640118&lon=20.927704121
 
 res = conn.getresponse()
 data = res.read()
-
-print(data.decode("utf-8"))
+dict = data.decode("utf-8")
+dict = ast.literal_eval(dict)
+print()

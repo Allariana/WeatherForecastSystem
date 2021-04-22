@@ -47,7 +47,8 @@ scaled = scaler.fit_transform(values)
 # frame as supervised learning
 reframed = series_to_supervised(scaled, N_DAYS, 1)
 # drop columns we don't want to predict
-reframed.drop(reframed.columns[[25, 26, 28, 29]], axis=1, inplace=True)
+# reframed.drop(reframed.columns[[25, 26, 28, 29]], axis=1, inplace=True)
+reframed.drop(reframed.columns[[27, 28, 30, 31, 32, 33, 34, 35]], axis=1, inplace=True)
 # reframed.drop(reframed.columns[[3]], axis=1, inplace=True)
 # split into train and test sets
 values = reframed.values

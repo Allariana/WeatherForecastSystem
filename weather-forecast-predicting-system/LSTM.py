@@ -49,16 +49,18 @@ reframed = series_to_supervised(scaled, 1, 1)
 # drop columns we don't want to predict
 reframed.drop(reframed.columns[[9, 10, 12, 13, 14, 15, 16, 17]], axis=1, inplace=True)
 # reframed.drop(reframed.columns[[3]], axis=1, inplace=True)
+# reframed.drop(reframed.columns[[9, 10, 12, 13, 14, 15, 16, 17]], axis=1, inplace=True)
+# reframed.drop(reframed.columns[[3]], axis=1, inplace=True)
 # split into train and test sets
 values = reframed.values
-X = values[:, :9]
-y = values[:, -1]
-train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=0.1, random_state=42)
-# train = values[:TRAIN_SIZE, :]
-# test = values[TRAIN_SIZE:, :]
-# # split into input and outputs
-# train_X, train_y = train[:, :-1], train[:, -1]
-# test_X, test_y = test[:, :-1], test[:, -1]
+# X = values[:, :9]
+# y = values[:, -1]
+# train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=0.1, random_state=42)
+train = values[:TRAIN_SIZE, :]
+test = values[TRAIN_SIZE:, :]
+# split into input and outputs
+train_X, train_y = train[:, :-1], train[:, -1]
+test_X, test_y = test[:, :-1], test[:, -1]
 # reshape input to be 3D [samples, timesteps, features]
 train_X = train_X.reshape((train_X.shape[0], 1, train_X.shape[1]))
 test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
@@ -85,6 +87,16 @@ inv_y = inv_y[:, 0]
 # plot forecasts against actual outcomes
 pyplot.plot(inv_y, label='wartość oczekiwana')
 pyplot.plot(inv_yhat, color='red', label='wartość prognozowana')
+pyplot.legend()
+pyplot.xlabel('Numer próbki')
+pyplot.ylabel('Średnia temperatura dobowa °C')
+pyplot.title('Wykres wartości prognozowanej średniej temperatury dobowej')
+pyplot.show()
+
+inv_y_cut = inv_y[350:]
+inv_yhat_cut = inv_yhat[350:]
+pyplot.plot(inv_y_cut, label='wartość oczekiwana')
+pyplot.plot(inv_yhat_cut, color='red', label='wartość prognozowana')
 pyplot.legend()
 pyplot.xlabel('Numer próbki')
 pyplot.ylabel('Średnia temperatura dobowa °C')

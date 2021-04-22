@@ -47,7 +47,8 @@ scaled = scaler.fit_transform(values)
 reframed = series_to_supervised(scaled, N_DAYS, 1)
 # drop columns we don't want to predict
 # reframed.drop(reframed.columns[[8, 9, 11, 12, 13, 14, 15]], axis=1, inplace=True)
-reframed.drop(reframed.columns[[24, 25, 27, 28, 29, 30, 31]], axis=1, inplace=True)
+# reframed.drop(reframed.columns[[24, 25, 27, 28, 29, 30, 31, 32]], axis=1, inplace=True)
+reframed.drop(reframed.columns[[27, 28, 30, 31, 32, 33, 34, 35]], axis=1, inplace=True)
 # reframed.drop(reframed.columns[[3]], axis=1, inplace=True)
 # split into train and test sets
 values = reframed.values
@@ -70,17 +71,31 @@ history = model.fit(train_X, train_y, epochs=50, batch_size=72, validation_data=
 yhat = model.predict(test_X)
 test_X = test_X.reshape((test_X.shape[0], N_DAYS*N_FEATURES))
 # invert scaling for forecast
-inv_yhat = concatenate((yhat, test_X[:, -7:]), axis=1)
+inv_yhat = concatenate((yhat, test_X[:, -8:]), axis=1)
 inv_yhat = scaler.inverse_transform(inv_yhat)
 inv_yhat = inv_yhat[:, 0]
 # # invert scaling for actual
 test_y = test_y.reshape((len(test_y), 1))
-inv_y = concatenate((test_y, test_X[:, -7:]), axis=1)
+inv_y = concatenate((test_y, test_X[:, -8:]), axis=1)
 inv_y = scaler.inverse_transform(inv_y)
 inv_y = inv_y[:, 0]
 # plot forecasts against actual outcomes
-pyplot.plot(inv_y)
-pyplot.plot(inv_yhat, color='red')
+pyplot.plot(inv_y, label='wartość oczekiwana')
+pyplot.plot(inv_yhat, color='red', label='wartość prognozowana')
+pyplot.legend()
+pyplot.xlabel('Numer próbki')
+pyplot.ylabel('Średnia temperatura dobowa °C')
+pyplot.title('Wykres wartości prognozowanej średniej temperatury dobowej')
+pyplot.show()
+
+inv_y_cut = inv_y[350:]
+inv_yhat_cut = inv_yhat[350:]
+pyplot.plot(inv_y_cut, label='wartość oczekiwana')
+pyplot.plot(inv_yhat_cut, color='red', label='wartość prognozowana')
+pyplot.legend()
+pyplot.xlabel('Numer próbki')
+pyplot.ylabel('Średnia temperatura dobowa °C')
+pyplot.title('Wykres wartości prognozowanej średniej temperatury dobowej')
 pyplot.show()
 for t in range(400):
     print('predicted=%f, expected=%f' % (inv_yhat[t], inv_y[t]))

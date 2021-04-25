@@ -7,10 +7,12 @@ from pandas import concat
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
+from joblib import dump
+import pickle
 from constants import *
-
 
 
 # convert series to supervised learning
@@ -44,6 +46,9 @@ values = values.astype('float32')
 # normalize features
 scaler = MinMaxScaler(feature_range=(0, 1))
 scaled = scaler.fit_transform(values)
+dump(scaler, 'scaler.joblib')
+dump(scaler, 'scaler.bin', compress=True)
+pickle.dump(scaler, open('scaler.pkl', 'wb'))
 # frame as supervised learning
 reframed = series_to_supervised(scaled, N_DAYS, 1)
 # drop columns we don't want to predict
@@ -54,7 +59,7 @@ reframed.drop(reframed.columns[[25, 26, 28, 29]], axis=1, inplace=True)
 values = reframed.values
 X = values[:, :N_OBS]
 y = values[:, -N_FEATURES]
-train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=0.1, random_state=42)
+train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=0.15, random_state=42)
 # train = values[:TRAIN_SIZE, :]
 # test = values[TRAIN_SIZE:, :]
 # # split into input and outputs

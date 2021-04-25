@@ -12,6 +12,7 @@ from keras.layers import Dense, LSTM
 from constants import *
 
 
+
 # convert series to supervised learning
 def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
     n_vars = 1 if type(data) is list else data.shape[1]
@@ -36,7 +37,6 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
         agg.dropna(inplace=True)
     return agg
 
-
 dataset = read_csv(DESTINATION_FOLDER + FILENAME, header=0, index_col=0)
 values = dataset.values
 # ensure all data is float
@@ -47,8 +47,8 @@ scaled = scaler.fit_transform(values)
 # frame as supervised learning
 reframed = series_to_supervised(scaled, N_DAYS, 1)
 # drop columns we don't want to predict
-# reframed.drop(reframed.columns[[25, 26, 28, 29]], axis=1, inplace=True)
-reframed.drop(reframed.columns[[27, 28, 30, 31, 32, 33, 34, 35]], axis=1, inplace=True)
+reframed.drop(reframed.columns[[25, 26, 28, 29]], axis=1, inplace=True)
+# reframed.drop(reframed.columns[[27, 28, 30, 31, 32, 33, 34, 35]], axis=1, inplace=True)
 # reframed.drop(reframed.columns[[3]], axis=1, inplace=True)
 # split into train and test sets
 values = reframed.values
@@ -70,6 +70,8 @@ model.add(Dense(1))
 model.compile(loss='mae', optimizer='adam')
 # fit network
 history = model.fit(train_X, train_y, epochs=50, batch_size=72, validation_data=(test_X, test_y), verbose=2, shuffle=False)
+# save model to single file
+model.save('lstm_model.h5')
 # make a prediction
 yhat = model.predict(test_X)
 test_X = test_X.reshape((test_X.shape[0], N_DAYS*N_FEATURES))

@@ -3,6 +3,7 @@ from keras.models import load_model
 from joblib import load
 from pandas import DataFrame
 import numpy as np
+from numpy import concatenate
 from constants import *
 
 actual_data = []
@@ -23,4 +24,10 @@ values_all = values_all.reshape((values_all.shape[0], N_DAYS, N_FEATURES))
 model = load_model('lstm_model.h5')
 # make predictions
 yhat = model.predict(values_all)
-print(yhat)
+values_all = values_all.reshape((values_all.shape[0], N_DAYS*N_FEATURES))
+# invert scaling for forecast
+inv_yhat = concatenate((yhat, values_all[:, -4:]), axis=1)
+inv_yhat = scaler.inverse_transform(inv_yhat)
+inv_yhat = inv_yhat[:, 0]
+
+print()

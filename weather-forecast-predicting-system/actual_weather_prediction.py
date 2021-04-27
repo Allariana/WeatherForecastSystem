@@ -30,4 +30,4 @@ inv_yhat = concatenate((yhat, values_all[:, -4:]), axis=1)
 inv_yhat = scaler.inverse_transform(inv_yhat)
 inv_yhat = inv_yhat[:, 0]
 
-print()
+print(inv_yhat)

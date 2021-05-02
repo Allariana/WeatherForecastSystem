@@ -29,5 +29,9 @@ values_all = values_all.reshape((values_all.shape[0], N_DAYS*N_FEATURES))
 inv_yhat = concatenate((yhat, values_all[:, -4:]), axis=1)
 inv_yhat = scaler.inverse_transform(inv_yhat)
 inv_yhat = inv_yhat[:, 0]
+result = int(round(inv_yhat[0]))
 
-print(inv_yhat)
+f = open("result.txt", "w+")
+f.write("%d" % result)
+f.close()
+print(result)

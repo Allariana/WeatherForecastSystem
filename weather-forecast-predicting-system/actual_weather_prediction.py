@@ -8,11 +8,11 @@ from PIL import Image, ImageFont, ImageDraw
 from constants import *
 
 actual_data = []
-actual_data = OWMApi.get_actual_weather_data()
+actual_data = OWMApi.get_actual_weather_data(52.29958465640118, 20.927704121901673)
 df = DataFrame(actual_data).transpose()
 values = df.values
 values = values.astype('float32')
-scaler = load('scaler.joblib')
+scaler = load('scalers/scaler-warsaw.joblib')
 values_all = values[:, 0:5]
 values_all = scaler.transform(values_all)
 for i in range(5, 21, 5):
@@ -22,7 +22,7 @@ for i in range(5, 21, 5):
 
 values_all = values_all.reshape((values_all.shape[0], N_DAYS, N_FEATURES))
 # load model from single file
-model = load_model('lstm_model.h5')
+model = load_model('models/lstm_model-warsaw.h5')
 # make predictions
 yhat = model.predict(values_all)
 values_all = values_all.reshape((values_all.shape[0], N_DAYS*N_FEATURES))
@@ -40,5 +40,6 @@ my_image = Image.open("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/map.png")
 title_font = ImageFont.truetype('OrelegaOne-Regular.ttf', 50)
 image_editable = ImageDraw.Draw(my_image)
 image_editable.text((337, 337), "%d °C" % result, (0, 0, 0), font=title_font)
+image_editable.text((200, 200), "%d °C" % result, (0, 0, 0), font=title_font)
 my_image.save("result.jpg")
 print(result)

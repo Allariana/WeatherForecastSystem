@@ -46,9 +46,7 @@ values = values.astype('float32')
 # normalize features
 scaler = MinMaxScaler(feature_range=(0, 1))
 scaled = scaler.fit_transform(values)
-dump(scaler, 'scaler.joblib')
-dump(scaler, 'scaler.bin', compress=True)
-pickle.dump(scaler, open('scaler.pkl', 'wb'))
+dump(scaler, 'scaler' + CITY + '.joblib')
 # frame as supervised learning
 reframed = series_to_supervised(scaled, N_DAYS, 1)
 # drop columns we don't want to predict
@@ -76,7 +74,7 @@ model.compile(loss='mae', optimizer='adam')
 # fit network
 history = model.fit(train_X, train_y, epochs=50, batch_size=72, validation_data=(test_X, test_y), verbose=2, shuffle=False)
 # save model to single file
-model.save('lstm_model.h5')
+model.save('lstm_model' + CITY + '.h5')
 # make a prediction
 yhat = model.predict(test_X)
 test_X = test_X.reshape((test_X.shape[0], N_DAYS*N_FEATURES))
@@ -98,8 +96,6 @@ pyplot.ylabel('Średnia temperatura dobowa °C')
 pyplot.title('Wykres wartości prognozowanej średniej temperatury dobowej')
 pyplot.show()
 
-# inv_y_cut = inv_y[440:]
-# inv_yhat_cut = inv_yhat[440:]
 inv_y_cut = inv_y[350:]
 inv_yhat_cut = inv_yhat[350:]
 pyplot.plot(inv_y_cut, label='wartość oczekiwana')
@@ -114,4 +110,4 @@ for t in range(400):
 # calculate RMSE
 rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
 print('Test RMSE: %.3f' % rmse)
-# print()
+

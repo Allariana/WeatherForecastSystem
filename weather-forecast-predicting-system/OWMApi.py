@@ -2,7 +2,8 @@ import http.client
 import ast
 from datetime import datetime, timedelta, timezone
 
-def get_actual_weather_data():
+
+def get_actual_weather_data(lat, lon):
     list = []
     for j in range(5, 0, -1):
         day_before = datetime.now() - timedelta(j)
@@ -13,9 +14,10 @@ def get_actual_weather_data():
         headers = {
             'x-rapidapi-key': "2f8a103f4emshe6452ebdc159a90p156155jsn9cd2567b8e5c",
             'x-rapidapi-host': "community-open-weather-map.p.rapidapi.com"
-            }
+        }
 
-        conn.request("GET", "/onecall/timemachine?lat=52.29958465640118&lon=20.927704121901673&dt=" + str(timestamp), headers=headers)
+        conn.request("GET", "/onecall/timemachine?lat=" + str(lat) + "&lon=" + str(lon) + "&dt=" + str(timestamp),
+                     headers=headers)
 
         res = conn.getresponse()
         data = res.read()
@@ -30,18 +32,19 @@ def get_actual_weather_data():
             sum += dict["hourly"][i]["temp"]
             humidity_sum += dict["hourly"][i]["humidity"]
             wind_speed_sum += dict["hourly"][i]["wind_speed"]
-            if(dict["hourly"][i]["temp"]<min_temp):
+            if (dict["hourly"][i]["temp"] < min_temp):
                 min_temp = dict["hourly"][i]["temp"]
             if (dict["hourly"][i]["temp"] > max_temp):
                 max_temp = dict["hourly"][i]["temp"]
 
-        avg = sum/24
+        avg = sum / 24
         min_temp = min_temp - 273.15
         max_temp = max_temp - 273.15
         avg = avg - 273.15
-        avg_humidity = humidity_sum/24
-        avg_wind_speed = wind_speed_sum/24
+        avg_humidity = humidity_sum / 24
+        avg_wind_speed = wind_speed_sum / 24
         list += [max_temp, min_temp, avg, avg_humidity, avg_wind_speed]
     return list
+
 
 print()

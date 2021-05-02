@@ -6,13 +6,15 @@ import numpy as np
 from numpy import concatenate
 from PIL import Image, ImageFont, ImageDraw
 from constants import *
-
+city = ['warsaw', 'KRAKÓW-OBSERWATORIUM']
+d = {'lat': [52.29958465640118, 50.0649722906938], 'lon': [20.927704121901673, 19.988522784913144]}
+df = DataFrame(data=d)
 actual_data = []
-actual_data = OWMApi.get_actual_weather_data(52.29958465640118, 20.927704121901673)
+actual_data = OWMApi.get_actual_weather_data(df['lat'][0], df['lon'][0])
 df = DataFrame(actual_data).transpose()
 values = df.values
 values = values.astype('float32')
-scaler = load('scalers/scaler-warsaw.joblib')
+scaler = load('scalers/scaler-' + city[0] + '.joblib')
 values_all = values[:, 0:5]
 values_all = scaler.transform(values_all)
 for i in range(5, 21, 5):
@@ -22,7 +24,7 @@ for i in range(5, 21, 5):
 
 values_all = values_all.reshape((values_all.shape[0], N_DAYS, N_FEATURES))
 # load model from single file
-model = load_model('models/lstm_model-warsaw.h5')
+model = load_model('models/lstm_model-' + city[0] + '.h5')
 # make predictions
 yhat = model.predict(values_all)
 values_all = values_all.reshape((values_all.shape[0], N_DAYS*N_FEATURES))

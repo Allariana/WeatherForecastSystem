@@ -4,6 +4,7 @@ from joblib import load
 from pandas import DataFrame
 import numpy as np
 from numpy import concatenate
+from PIL import Image, ImageFont, ImageDraw
 from constants import *
 
 actual_data = []
@@ -34,4 +35,10 @@ result = int(round(inv_yhat[0]))
 f = open("result.txt", "w+")
 f.write("%d" % result)
 f.close()
+
+my_image = Image.open("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/map.png")
+title_font = ImageFont.truetype('OrelegaOne-Regular.ttf', 50)
+image_editable = ImageDraw.Draw(my_image)
+image_editable.text((337, 337), "%d °C" % result, (0, 0, 0), font=title_font)
+my_image.save("result.jpg")
 print(result)

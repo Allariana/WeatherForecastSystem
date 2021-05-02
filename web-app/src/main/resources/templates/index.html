@@ -17,23 +17,26 @@
 <body>
 <div th:replace="fragments/header.html :: header"/>
 <div class="container bg-light text-dark p-4 ">
-    <h1>Prognoza</h1>
+    <img th:src="@{/result.jpg}" />
+<!--    <h1>Prognoza</h1>-->
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Stacja</th>
-            <th>Srednia dobowa temperatura</th>
-        </tr>
-        <tr>
-            <th>1</th>
-            <th>Warszawa - Bielany</th>
-            <th th:text="${temp}">wartosc</th>
-        </tr>
-        </thead>
-    </table>
+<!--    <table class="table">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>#</th>-->
+<!--            <th>Stacja</th>-->
+<!--            <th>Srednia dobowa temperatura</th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th>1</th>-->
+<!--            <th>Warszawa - Bielany</th>-->
+<!--            <th th:text="${temp}">wartosc</th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <img src="result.jpg" alt="forecast">-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--    </table>-->
 </div>
-<img src="E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/weather-forecast-predicting-system/result.jpg">
 </body>
 </html>

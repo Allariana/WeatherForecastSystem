@@ -14,7 +14,7 @@ public class BaseController extends ScriptCaller{
     public ModelAndView index(HttpServletRequest request) throws Exception {
         String temp = callScript();
         ModelAndView model = new ModelAndView("index.html");
-        model.addObject("temp", temp);
+        model.addObject("date", temp);
         return model;
     }
 }

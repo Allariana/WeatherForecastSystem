@@ -17,26 +17,9 @@
 <body>
 <div th:replace="fragments/header.html :: header"/>
 <div class="container bg-light text-dark p-4 ">
-    <img th:src="@{/result.jpg}" />
-<!--    <h1>Prognoza</h1>-->
-
-<!--    <table class="table">-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--            <th>#</th>-->
-<!--            <th>Stacja</th>-->
-<!--            <th>Srednia dobowa temperatura</th>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <th>1</th>-->
-<!--            <th>Warszawa - Bielany</th>-->
-<!--            <th th:text="${temp}">wartosc</th>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <img src="result.jpg" alt="forecast">-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--    </table>-->
+    <center>
+        <h2 th:text="${date}">wartosc</h2>
+        <img th:src="@{/result.jpg}" align="center"/></center>
 </div>
 </body>
 </html>

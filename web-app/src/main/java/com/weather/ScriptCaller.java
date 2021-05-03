@@ -12,6 +12,8 @@ import javax.script.ScriptEngineManager;
 import javax.script.SimpleScriptContext;
 import java.io.*;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,6 +22,10 @@ import java.util.Scanner;
 public class ScriptCaller {
 
     public String callScript() throws Exception {
+        SimpleDateFormat formatter= new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(formatter.format(date));
+
         String data = "";
         try {
             File myObj = new File("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/weather-forecast-predicting-system/result.txt");
@@ -42,7 +48,8 @@ public class ScriptCaller {
 //        engine.eval(new FileReader("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/weather-forecast-predicting-system/print.py"), context);
 //        System.out.print(writer.toString().trim());
         String temp = "10";
-        return data;
+//        return data;
+        return formatter.format(date);
     }
 
 

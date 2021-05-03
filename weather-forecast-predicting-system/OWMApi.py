@@ -45,6 +45,3 @@ def get_actual_weather_data(lat, lon):
         avg_wind_speed = wind_speed_sum / 24
         list += [max_temp, min_temp, avg, avg_humidity, avg_wind_speed]
     return list
-
-
-print()

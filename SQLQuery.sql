@@ -10,3 +10,6 @@ order by d.[Kod stacji], d.[Rok], d.[Miesiac], d.[Dzien]
 select * from weather
 select * from k_d_m
 select * from k_d_t_m
+
+SELECT DISTINCT [Nazwa stacji] FROM Weather 
+where [Srednia dobowa wilgotnosc wzgledna % ] not like '0' and Rok like '2020'

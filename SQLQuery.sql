@@ -12,4 +12,6 @@ select * from k_d_m
 select * from k_d_t_m
 
 SELECT DISTINCT [Nazwa stacji] FROM Weather 
-where [Srednia dobowa wilgotnosc wzgledna % ] not like '0' and Rok like '2020'
+where [Srednia dobowa wilgotnosc wzgledna % ] not like '0' and Rok like '2015'
+
+SELECT * FROM Weather where [Nazwa stacji] like 'DAR£OWO'

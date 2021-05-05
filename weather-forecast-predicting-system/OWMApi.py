@@ -5,16 +5,15 @@ from datetime import datetime, timedelta, timezone
 
 def get_actual_weather_data(lat, lon):
     list = []
+    conn = http.client.HTTPSConnection("community-open-weather-map.p.rapidapi.com")
+
+    headers = {
+        'x-rapidapi-key': "f7cbc33b86msh15d74892fcf8b61p14f6c8jsn5ac8c369d4d2",
+        'x-rapidapi-host': "community-open-weather-map.p.rapidapi.com"
+    }
     for j in range(5, 0, -1):
         day_before = datetime.now() - timedelta(j)
         timestamp = int(day_before.replace(tzinfo=timezone.utc).timestamp())
-
-        conn = http.client.HTTPSConnection("community-open-weather-map.p.rapidapi.com")
-
-        headers = {
-            'x-rapidapi-key': "2f8a103f4emshe6452ebdc159a90p156155jsn9cd2567b8e5c",
-            'x-rapidapi-host': "community-open-weather-map.p.rapidapi.com"
-        }
 
         conn.request("GET", "/onecall/timemachine?lat=" + str(lat) + "&lon=" + str(lon) + "&dt=" + str(timestamp),
                      headers=headers)

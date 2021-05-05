@@ -7,16 +7,18 @@ from numpy import concatenate
 from PIL import Image, ImageFont, ImageDraw
 from constants import *
 
-city = ['warsaw', 'KRAKÓW-OBSERWATORIUM']
-d = {'lat': [52.29958465640118, 50.0649722906938], 'lon': [20.927704121901673, 19.988522784913144],
-     'x': [340, 332], 'y': [336, 507]}
+city = ['warsaw', 'KRAKÓW-OBSERWATORIUM', 'BORUCINO']
+d = {'lat': [52.29958465640118, 50.0649722906938, 54.36538821401951],
+     'lon': [20.927704121901673, 19.988522784913144, 18.592691014184325],
+     'x': [348, 319, 170], 'y': [240, 420, 6]}
 df2 = DataFrame(data=d)
 
-my_image = Image.open("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/map.png")
-title_font = ImageFont.truetype('OrelegaOne-Regular.ttf', 50)
+my_image = Image.open("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/"
+                      "weather-forecast-predicting-system/image/map3.png")
+title_font = ImageFont.truetype('image/OrelegaOne-Regular.ttf', 50)
 image_editable = ImageDraw.Draw(my_image)
 
-for j in range(0, 2):
+for j in range(0, 3):
     actual_data = []
     actual_data = OWMApi.get_actual_weather_data(df2['lat'][j], df2['lon'][j])
     df = DataFrame(actual_data).transpose()
@@ -44,7 +46,7 @@ for j in range(0, 2):
     print(result)
     image_editable.text((df2['x'][j], df2['y'][j]), "%d °C" % result, (0, 0, 0), font=title_font)
 
-my_image.save("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/web-app/src/main/resources/static/result.jpg")
+my_image.save("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/web-app/src/main/resources/static/result.png")
 
 # f = open("result.txt", "w+")
 # f.write("%d" % result)

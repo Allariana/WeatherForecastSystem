@@ -94,8 +94,8 @@ pyplot.ylabel('Średnia temperatura dobowa °C')
 pyplot.title('Wykres wartości prognozowanej średniej temperatury dobowej')
 pyplot.show()
 
-inv_y_cut = inv_y[350:]
-inv_yhat_cut = inv_yhat[350:]
+inv_y_cut = inv_y[550:]
+inv_yhat_cut = inv_yhat[550:]
 pyplot.plot(inv_y_cut, label='wartość oczekiwana')
 pyplot.plot(inv_yhat_cut, color='red', label='wartość prognozowana')
 pyplot.legend()

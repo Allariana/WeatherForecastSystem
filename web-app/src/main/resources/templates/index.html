@@ -16,10 +16,15 @@
 </head>
 <body>
 <div th:replace="fragments/header.html :: header"/>
-
-    <center>
-        <h2 th:text="${date}">wartosc</h2>
-        <img th:src="@{/result.png}" align="center"/></center>
-
+<table class="table">
+    <tr>
+        <th><center><h2>Dzisiaj</h2></center></th>
+        <th><center><h2>Jutro</h2></center></th>
+    </tr>
+    <tr>
+        <td><center><img th:src="@{/result.png}" align="center"/></center></td>
+        <td><center><img th:src="@{/result2.png}" align="center"/></center></td>
+    </tr>
+</table>
 </body>
 </html>

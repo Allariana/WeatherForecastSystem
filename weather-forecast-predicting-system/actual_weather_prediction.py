@@ -18,7 +18,12 @@ my_image = Image.open("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/"
 title_font = ImageFont.truetype('image/OrelegaOne-Regular.ttf', 50)
 image_editable = ImageDraw.Draw(my_image)
 
-for j in range(0, 3):
+my_image2 = Image.open("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/"
+                      "weather-forecast-predicting-system/image/map3a.png")
+image_editable2 = ImageDraw.Draw(my_image2)
+
+for j in range(0, 2):
+# for j in range(2, 3):
     actual_data = []
     actual_data = OWMApi.get_actual_weather_data(df2['lat'][j], df2['lon'][j])
     df = DataFrame(actual_data).transpose()
@@ -37,17 +42,29 @@ for j in range(0, 3):
     model = load_model('models/lstm_model-' + city[j] + '.h5')
     # make predictions
     yhat = model.predict(values_all)
-    values_all = values_all.reshape((values_all.shape[0], N_DAYS*N_FEATURES))
+    values_all_reshape = values_all.reshape((values_all.shape[0], N_DAYS*N_FEATURES))
     # invert scaling for forecast
-    inv_yhat = concatenate((yhat, values_all[:, -(N_FEATURES-1):]), axis=1)
+    inv_yhat = concatenate((yhat, values_all_reshape[:, -(N_FEATURES-1):]), axis=1)
     inv_yhat = scaler.inverse_transform(inv_yhat)
     inv_yhat = inv_yhat[:, 0]
     result = int(round(inv_yhat[0]))
     print(result)
     image_editable.text((df2['x'][j], df2['y'][j]), "%d °C" % result, (0, 0, 0), font=title_font)
+    # load model from single file
+    model2 = load_model('models/tomorrow_model-' + city[j] + '.h5')
+    # make predictions
+    yhat2 = model2.predict(values_all)
+    values_all = values_all.reshape((values_all.shape[0], N_DAYS*N_FEATURES))
+    # invert scaling for forecast
+    inv_yhat2 = concatenate((yhat2, values_all[:, -(N_FEATURES-1):]), axis=1)
+    inv_yhat2 = scaler.inverse_transform(inv_yhat2)
+    inv_yhat2 = inv_yhat2[:, 0]
+    result2 = int(round(inv_yhat2[0]))
+    print(result2)
+    image_editable2.text((df2['x'][j], df2['y'][j]), "%d °C" % result2, (0, 0, 0), font=title_font)
 
 my_image.save("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/web-app/src/main/resources/static/result.png")
-
+my_image2.save("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/web-app/src/main/resources/static/result2.png")
 # f = open("result.txt", "w+")
 # f.write("%d" % result)
 # f.close()

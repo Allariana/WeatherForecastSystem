@@ -10,18 +10,22 @@ all_files2 = glob.glob(os.path.join(SOURCE_DATA2, "*.csv"))
 i = 0
 for f in all_files:
         df = pd.read_csv(f, header=None, encoding='windows-1250')
-        df.to_csv(DATA_WITH_HEADERS + "\k_" + str(i) + ".csv", header=["Kod stacji", "Nazwa stacji", "Rok", "Miesiac", "Dzien", "Srednia dobowa temperatura",
-"Status pomiaru TEMP", "Srednia dobowa wilgotnosc wzgledna[%]", "Status pomiaru WLGS", "Srednia dobowa predkosc wiatru [m/s]", "Status pomiaru FWS",
-        "Srednie dobowe zachmurzenie ogolne [oktanty]", "Status pomiaru NOS"], encoding='windows-1250')
+        df.to_csv(DATA_WITH_HEADERS + "\k_" + str(i) + ".csv", header=["Kod stacji", "Nazwa stacji",
+        "Rok", "Miesiac", "Dzien", "Srednia dobowa temperatura", "Status pomiaru TEMP",
+        "Srednia dobowa wilgotnosc wzgledna[%]", "Status pomiaru WLGS", "Srednia dobowa predkosc wiatru [m/s]",
+        "Status pomiaru FWS", "Srednie dobowe zachmurzenie ogolne [oktanty]", "Status pomiaru NOS"],
+        encoding='windows-1250')
         i += 1
 
 i = 0
 for f in all_files2:
         df = pd.read_csv(f, header=None, encoding='windows-1250')
-        df.to_csv(DATA_WITH_HEADERS2 + "\k_" + str(i) + ".csv", header=["Kod stacji", "Nazwa stacji", "Rok", "Miesiac", "Dzien", "Maksymalna temperatura dobowa [°C]",
-"Status pomiaru TMAX", "Minimalna temperatura dobowa [°C]", "Status pomiaru TMIN", "Średnia temperatura dobowa [°C]", "Status pomiaru STD", "Temperatura minimalna przy gruncie [°C]",
-        "Status pomiaru TMNG", "Suma dobowa opadów [mm]", "Status pomiaru SMDB", "Rodzaj opadu  [S/W/ ]", "Wysokość pokrywy śnieżnej [cm]", "Status pomiaru PKSN"],
-                  encoding='windows-1250')
+        df.to_csv(DATA_WITH_HEADERS2 + "\k_" + str(i) + ".csv", header=["Kod stacji", "Nazwa stacji", "Rok",
+        "Miesiac", "Dzien", "Maksymalna temperatura dobowa [°C]", "Status pomiaru TMAX",
+        "Minimalna temperatura dobowa [°C]", "Status pomiaru TMIN", "Średnia temperatura dobowa [°C]",
+        "Status pomiaru STD", "Temperatura minimalna przy gruncie [°C]", "Status pomiaru TMNG",
+        "Suma dobowa opadów [mm]", "Status pomiaru SMDB", "Rodzaj opadu  [S/W/ ]",
+        "Wysokość pokrywy śnieżnej [cm]", "Status pomiaru PKSN"], encoding='windows-1250')
         i += 1
 
 files = glob.glob(os.path.join(DATA_WITH_HEADERS, "*.csv"))

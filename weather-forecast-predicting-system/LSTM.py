@@ -45,7 +45,7 @@ values = values.astype('float32')
 scaler = MinMaxScaler(feature_range=(0, 1))
 scaled = scaler.fit_transform(values)
 # frame as supervised learning
-reframed = series_to_supervised(scaled, 1, 1)
+reframed = series_to_supervised(scaled, 2, 2)
 # drop columns we don't want to predict
 reframed.drop(reframed.columns[[3]], axis=1, inplace=True)
 # reframed.drop(reframed.columns[[9, 10, 12, 13, 14, 15, 16, 17]], axis=1, inplace=True)

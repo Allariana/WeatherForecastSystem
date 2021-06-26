@@ -17,20 +17,16 @@
 <body>
 <div th:replace="fragments/header.html :: header"/>
 <table class="table">
-    <tr>
-        <th>
-            <center><h2>Dzisiaj</h2></center>
-        </th>
-        <th>
-            <center><h2>Jutro</h2></center>
-        </th>
+    <tr style="text-align: center; vertical-align: middle;">
+        <td th:text="${today}">wartosc</td>
+        <td th:text="${tomorrow}">wartosc</td>
     </tr>
     <tr>
         <td>
-            <center><img th:src="@{/result.png}" align="center"/></center>
+            <center><img th:src="@{/result.png}"/></center>
         </td>
         <td>
-            <center><img th:src="@{/result2.png}" align="center"/></center>
+            <center><img th:src="@{/result2.png}"/></center>
         </td>
     </tr>
 </table>

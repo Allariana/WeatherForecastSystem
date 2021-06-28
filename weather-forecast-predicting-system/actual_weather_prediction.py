@@ -32,6 +32,7 @@ for j in range(0, 2):
     scaler = load('scalers/scaler-' + city[j] + '.joblib')
     values_all = values[:, 0:5]
     values_all = scaler.transform(values_all)
+
     for i in range(5, 21, 5):
         values_cut = values[:, i:(i+5)]
         values_cut = scaler.transform(values_cut)
@@ -63,9 +64,7 @@ for j in range(0, 2):
     print(result2)
     image_editable2.text((df2['x'][j], df2['y'][j]), "%d °C" % result2, (0, 0, 0), font=title_font)
 
-my_image.save("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/web-app/src/main/resources/static/result.png")
-my_image2.save("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/web-app/src/main/resources/static/result2.png")
-# f = open("result.txt", "w+")
-# f.write("%d" % result)
-# f.close()
+my_image.save("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/web-app/src/main/resources/static/today.png")
+my_image2.save("E:/Kinga/Studies-mgr/Semestr 3/Praca dyplomowa/System/web-app/src/main/resources/static/tomorrow.png")
+
 

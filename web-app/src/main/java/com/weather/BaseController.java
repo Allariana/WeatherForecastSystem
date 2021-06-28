@@ -13,7 +13,7 @@ import java.util.Date;
 public class BaseController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView index(HttpServletRequest request) throws Exception {
+    public ModelAndView getDate(HttpServletRequest request) throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date(System.currentTimeMillis());
         Date date2 = new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24));
